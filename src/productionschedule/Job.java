@@ -68,7 +68,7 @@ public class Job {
 
     private ArrayList buildPackageArray() throws ClassNotFoundException, SQLException, IllegalArgumentException, IllegalAccessException {
         System.out.println("BuildPackageArray started");
-        DatabaseObject dbo = new DatabaseObject("jdbc:mysql://davelaub.com:3306/dlaub25_lasersched", "dlaub25_fmi", "admin");
+        DatabaseObject dbo = new DatabaseObject("jdbc:mysql://10.10.10.14:3306/dlaub25_lasersched", "dlaub25_fmi", "admin");
         String query = "SELECT `pkgName`, `mailDate`, `status`, `size`, `nUp`, `printer`, `queuePos` ,`ert`, `id`, x_cast_to_int(size/nUp) AS 'pages' FROM `packages` WHERE `id` =" + this.id;
         DatabaseOutputObject dboo = DatabaseTools.queryDatabase(dbo, query);
         ArrayList packagesOut = new ArrayList();

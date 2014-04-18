@@ -19,7 +19,7 @@ import javax.sql.rowset.CachedRowSet;
  */
 public class fileManagement {
 
-    public static final String address = "jdbc:mysql://davelaub.com:3306/dlaub25_lasersched";
+    public static final String address = "jdbc:mysql://10.10.10.14:3306/dlaub25_lasersched";
     public static final String userName = "dlaub25_fmi";
     public static final String password = "admin";
     public static DatabaseObject dbo = new DatabaseObject(address, userName, password);
