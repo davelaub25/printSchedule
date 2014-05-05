@@ -33,7 +33,15 @@ public class Job {
         id = i;
         packages = buildPackageArray();
     }
-
+    
+    Job(String n, String c, String j, String s, String pro, ArrayList packageSet) throws ClassNotFoundException, SQLException, IllegalArgumentException, IllegalAccessException {
+        jobNum = n;
+        client = c;
+        jobName = j;
+        status = s;
+        programmer = pro;
+        packages = packageSet;
+    }
     Job(Map properties, boolean csvSourced) throws ClassNotFoundException, SQLException, IllegalArgumentException, IllegalAccessException {
         Field fieldlist[] = this.getClass().getDeclaredFields();
         for (int i = 0; i < fieldlist.length; i++) {

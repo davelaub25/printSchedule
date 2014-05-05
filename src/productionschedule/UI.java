@@ -292,6 +292,7 @@ public class UI extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JToolBar.Separator();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
+        countSheetScrollPane = new javax.swing.JScrollPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -342,7 +343,6 @@ public class UI extends javax.swing.JFrame {
 
         unschedButton.setText("UnSchedule");
         unschedButton.setToolTipText("Clicking this button with a package in a printer pool selected will un-schedule the job and put it back into the package pool.");
-        unschedButton.setBorder(null);
         unschedButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         unschedButton.setFocusable(false);
         unschedButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -568,12 +568,18 @@ public class UI extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 1421, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(countSheetScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 856, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 997, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(countSheetScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 503, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("tab4", jPanel1);
@@ -800,11 +806,14 @@ public class UI extends javax.swing.JFrame {
             Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            sheetParser.parse(countsIn,output,"UTF8",false,fileName);
-            //productionschedule.sheetParser(countsIn, output, "UTF8", false);
-        } catch (IOException ex) {
-            Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
+            
+            Job j = sheetParser.parse(countsIn,output,"UTF8",false,fileName);
+            AbstractTableModel cstm = new countSheetTableModel(j.packages);
+            JTable countSheetTable = new JTable(cstm);
+            
+            countSheetScrollPane.setViewportView(countSheetTable);
+            
+        } catch (IOException | ParseException | ClassNotFoundException | SQLException | IllegalArgumentException | IllegalAccessException ex) {
             Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -863,6 +872,7 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JScrollPane clydePane;
     private javax.swing.JButton commitButton;
+    private javax.swing.JScrollPane countSheetScrollPane;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -1206,7 +1216,7 @@ public class UI extends javax.swing.JFrame {
 
             // make sure it's displayed
             mySplash.update();
-        }
+       }
     }
     public void clearEmptyJobs(){
         
